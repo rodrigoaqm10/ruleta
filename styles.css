@@ -1,0 +1,240 @@
+/* RESET BÁSICO */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* BODY Y FUENTE */
+html, body {
+  height: 100%;
+  background-color: #fff;
+  color: #333;
+  font-family: "Inter", sans-serif;
+  text-align: center;
+  overflow-x: hidden;
+}
+
+/* ENCABEZADO */
+.header-block {
+  background-color: #fff;
+  padding: 20px 0;
+  border-bottom: 1px solid #eaeaea;
+}
+.block-logo {
+  max-width: 160px;
+  height: auto;
+}
+
+/* CONTENEDOR PRINCIPAL */
+.main-block {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+/* RULETA */
+.ruleta-wrapper {
+  width: 80%;
+  max-width: 450px;
+  aspect-ratio: 1 / 1; /* Mantiene proporción 1:1 */
+  margin: 0 auto 30px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  border-radius: 50%;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+/* CANVAS DE LA RULETA */
+#ruleta {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* PUNTERO: anillo + flecha lateral */
+#pointer {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translate(50%, -50%);
+  width: 50px;
+  height: 50px;
+  border: 6px solid #333;
+  border-radius: 50%;
+  background: transparent;
+  box-shadow: 0 0 6px rgba(0,0,0,0.4);
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+/* Triángulo pequeño apuntando hacia la ruleta */
+#pointer::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 100%;
+  width: 0;
+  height: 0;
+  border-right: 14px solid #333;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  transform: translateY(-50%);
+}
+
+#pointer.tick {
+  transform: translate(50%, -50%) scale(1.2);
+  border-color: #444;
+}
+#pointer.tick::after {
+  border-right-color: #444;
+}
+
+/* LOGO EN EL CENTRO DE LA RULETA */
+.center-logo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 60px;
+  height: 60px;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.center-logo img {
+  width: 80%;
+  height: auto;
+}
+
+/* MENSAJE DE VICTORIA */
+.win-message {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 999;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 2.2rem;
+  color: #fff;
+  text-align: center;
+  padding: 18px 36px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.25);
+  animation: pulseMessage 2s ease-in-out infinite;
+}
+.show-win {
+  display: block;
+}
+
+@keyframes pulseMessage {
+  0%   { transform: translate(-50%, -50%) scale(1); }
+  50%  { transform: translate(-50%, -50%) scale(1.05); }
+  100% { transform: translate(-50%, -50%) scale(1); }
+}
+
+/* BOTÓN GIRAR: degradado animado */
+#girar {
+  display: inline-block;
+  padding: 16px 50px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  text-transform: uppercase;
+  margin-bottom: 30px;
+  background: linear-gradient(270deg, #ff5858, #f09819);
+  background-size: 200% 200%;
+  animation: gradientMove 3s ease infinite;
+  box-shadow: 0 8px 20px rgba(240,152,25,0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+@keyframes gradientMove {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+#girar:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 12px 30px rgba(240,152,25,0.4);
+}
+
+/* CONTENEDOR DE CONFETI, FUEGOS Y LUCES */
+#confetti-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* Fuegos artificiales */
+.firework {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: fireworkExplosion 1.5s ease-out forwards;
+}
+
+@keyframes fireworkExplosion {
+  0%   { transform: scale(0); opacity: 1; }
+  100% { transform: scale(5); opacity: 0; }
+}
+
+/* LUCES (pequeños destellos parpadeando) */
+.light {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: flicker 1.5s infinite ease-in-out;
+  opacity: 0.6;
+}
+
+@keyframes flicker {
+  0%   { transform: scale(1);   opacity: 0.4; }
+  50%  { transform: scale(1.4); opacity: 1;   }
+  100% { transform: scale(1);   opacity: 0.4; }
+}
+
+/* MEDIA QUERIES PARA MÓVILES */
+@media (max-width: 480px) {
+  .main-block {
+    margin: 20px auto;
+    padding: 0 10px;
+  }
+
+  .ruleta-wrapper {
+    width: 90%;
+    margin-bottom: 20px;
+  }
+
+  #girar {
+    padding: 14px 30px;
+    font-size: 1rem;
+  }
+
+  .win-message {
+    font-size: 1.8rem;
+    padding: 14px 28px;
+  }
+}
