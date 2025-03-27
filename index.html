@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ruleta Premium - Block</title>
+  <!-- Fuentes: Inter y Poppins para el mensaje -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@700&display=swap" rel="stylesheet">
+  <!-- Hoja de estilos -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- Contenedor de stickers DETRÁS de la ruleta y el logo -->
+  <div id="stickers-container"></div>
+
+  <header class="header-block">
+    <img class="block-logo" src="https://www.blockstore.cl/cdn/shop/files/logo_600x.png" alt="Blockstore.cl">
+  </header>
+
+  <main class="main-block">
+    <div class="ruleta-wrapper">
+      <!-- Contenedor para forzar 1:1 con padding-top -->
+      <div class="ruleta-inner">
+        <canvas id="ruleta"></canvas>
+
+        <!-- Puntero estilo anillo con flecha lateral -->
+        <div id="pointer"></div>
+
+        <!-- Logo en el centro de la ruleta -->
+        <div class="center-logo">
+          <img src="https://www.blockstore.cl/cdn/shop/files/logo_600x.png" alt="Block">
+        </div>
+
+        <!-- Mensaje de victoria -->
+        <div id="winMessage" class="win-message"></div>
+      </div>
+    </div>
+
+    <!-- Botón de giro -->
+    <button id="girar">Girar Ruleta</button>
+  </main>
+
+  <!-- Contenedor para confeti, fuegos artificiales y luces -->
+  <div id="confetti-container"></div>
+
+  <!-- Script principal -->
+  <script src="script.js"></script>
+
+  <!-- Contenedor overlay para el regalo (animación especial) -->
+  <div id="regaloOverlay" class="regalo-overlay">
+    <div class="regalo-content">
+      <!-- Imagen "Same Vibes Nuevo Style Block" -->
+      <img src="Recurso 1@4x.png" alt="Same Vibes Nuevo Style Block">
+      <p class="regalo-texto">¡Felicidades! Has ganado la gran sorpresa de Block</p>
+    </div>
+  </div>
+
+</body>
+</html>

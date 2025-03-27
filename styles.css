@@ -1,0 +1,319 @@
+/* RESET BÁSICO */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* BODY Y FUENTE */
+html, body {
+  height: 100%;
+  background-color: #000000;
+  color: #000000;
+  font-family: "Inter", sans-serif;
+  text-align: center;
+  overflow-x: hidden;
+}
+
+/* ENCABEZADO CON MAYOR Z-INDEX PARA QUE EL LOGO QUEDE ARRIBA */
+.header-block {
+  background-color: #000000;
+  padding: 20px 0;
+  border-bottom: 1px solid #000000;
+  position: relative; /* Para que z-index funcione */
+  z-index: 999;       /* Muy alto => logo siempre por encima de stickers */
+}
+.block-logo {
+  max-width: 160px;
+  height: auto;
+  filter: invert(1);
+}
+
+/* CONTENEDOR PRINCIPAL */
+.main-block {
+  position: relative; 
+  z-index: 2; /* Ruleta encima de stickers (z-index:1) */
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+/* STICKERS DETRÁS */
+#stickers-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* Para no bloquear clics */
+  overflow: hidden;
+  z-index: 1; /* Detrás del header (z-index 999) y la ruleta (z-index 2) */
+}
+.sticker {
+  position: absolute;
+  will-change: transform;
+  transition: opacity 0.3s ease;
+}
+
+/* RULETA WRAPPER (CONTENEDOR RESPONSIVO) */
+.ruleta-wrapper {
+  width: 80%;
+  max-width: 450px;
+  margin: 0 auto 30px;
+  position: relative;
+}
+.ruleta-wrapper::before {
+  content: "";
+  display: block;
+  padding-top: 100%; /* 1:1 ratio */
+}
+.ruleta-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 50%;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  background: #fff;  /* Fondo de la ruleta */
+}
+
+/* CANVAS DE LA RULETA */
+#ruleta {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* PUNTERO: ANILLO + FLECHA LATERAL */
+#pointer {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translate(50%, -50%);
+  width: 50px;
+  height: 50px;
+  border: 6px solid #333;
+  border-radius: 50%;
+  background: transparent;
+  box-shadow: 0 0 6px rgba(0,0,0,0.4);
+  transition: transform 0.15s ease, border-color 0.15s ease;
+  pointer-events: none;
+}
+#pointer::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 100%;
+  width: 0;
+  height: 0;
+  border-right: 14px solid #333;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  transform: translateY(-50%);
+}
+#pointer.tick {
+  transform: translate(50%, -50%) scale(1.2);
+  border-color: #444;
+}
+#pointer.tick::after {
+  border-right-color: #444;
+}
+
+/* LOGO EN EL CENTRO DE LA RULETA */
+.center-logo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 60px;
+  height: 60px;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.center-logo img {
+  width: 80%;
+  height: auto;
+}
+
+/* MENSAJE DE VICTORIA */
+.win-message {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 999;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 2.2rem;
+  color: #fff;
+  text-align: center;
+  padding: 18px 36px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.25);
+  animation: pulseMessage 2s ease-in-out infinite;
+}
+.show-win {
+  display: block;
+}
+@keyframes pulseMessage {
+  0%   { transform: translate(-50%, -50%) scale(1); }
+  50%  { transform: translate(-50%, -50%) scale(1.05); }
+  100% { transform: translate(-50%, -50%) scale(1); }
+}
+
+/* BOTÓN GIRAR: DEGRADADO ANIMADO */
+#girar {
+  display: inline-block;
+  padding: 16px 50px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  text-transform: uppercase;
+  margin-bottom: 30px;
+  background: linear-gradient(270deg, #ff5858, #f09819);
+  background-size: 200% 200%;
+  animation: gradientMove 3s ease infinite;
+  box-shadow: 0 8px 20px rgba(240,152,25,0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+@keyframes gradientMove {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+#girar:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 12px 30px rgba(240,152,25,0.4);
+}
+
+/* CONTENEDOR DE CONFETI, FUEGOS Y LUCES */
+#confetti-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* FUEGOS ARTIFICIALES */
+.firework {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: fireworkExplosion 1.5s ease-out forwards;
+}
+@keyframes fireworkExplosion {
+  0%   { transform: scale(0); opacity: 1; }
+  100% { transform: scale(5); opacity: 0; }
+}
+
+/* LUCES (PEQUEÑOS DESTELLOS PARPADEANDO) */
+.light {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: flicker 1.5s infinite ease-in-out;
+  opacity: 0.6;
+}
+@keyframes flicker {
+  0%   { transform: scale(1);   opacity: 0.4; }
+  50%  { transform: scale(1.4); opacity: 1;   }
+  100% { transform: scale(1);   opacity: 0.4; }
+}
+
+/* OVERLAY DEL REGALO */
+.regalo-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.8);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+.regalo-content {
+  position: relative;
+  text-align: center;
+  animation: popIn 0.7s ease forwards;
+}
+.regalo-content img {
+  max-width: 80%;
+  height: auto;
+  filter: invert(1);
+  opacity: 0;
+  animation: fadeInImage 1.2s ease forwards 0.3s;
+}
+.regalo-texto {
+  font-size: 1.6rem;
+  color: #fff;
+  margin-top: 20px;
+  opacity: 0;
+  animation: fadeInText 1s ease forwards 0.8s;
+}
+@keyframes popIn {
+  0%   { transform: scale(0.7); opacity: 0; }
+  100% { transform: scale(1);   opacity: 1; }
+}
+@keyframes fadeInImage {
+  0%   { opacity: 0; transform: translateY(-20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeInText {
+  0%   { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.show-regalo {
+  display: flex;
+}
+
+/* MEDIA QUERIES PARA MÓVILES */
+@media (max-width: 480px) {
+  .block-logo {
+    max-width: 120px;
+  }
+  .main-block {
+    margin: 20px auto;
+    padding: 0 10px;
+  }
+  .ruleta-wrapper {
+    width: 90%;
+    max-width: 300px;
+    margin-bottom: 20px;
+  }
+  #girar {
+    padding: 14px 30px;
+    font-size: 1rem;
+  }
+  .win-message {
+    font-size: 1.6rem;
+    padding: 14px 28px;
+  }
+  /* Stickers más pequeños en móvil */
+  .sticker {
+    opacity: 0.08 !important;
+    transform: translate(-50%, -50%) scale(0.2) !important;
+  }
+}
